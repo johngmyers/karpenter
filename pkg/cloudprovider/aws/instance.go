@@ -127,6 +127,10 @@ func (p *InstanceProvider) launchInstances(ctx context.Context, constraints *v1a
 				ResourceType: aws.String(ec2.ResourceTypeInstance),
 				Tags:         v1alpha1.MergeTags(ctx, constraints.Tags, map[string]string{fmt.Sprintf("kubernetes.io/cluster/%s", injection.GetOptions(ctx).ClusterName): "owned"}),
 			},
+			{
+				ResourceType: aws.String(ec2.ResourceTypeVolume),
+				Tags:         v1alpha1.MergeTags(ctx, constraints.Tags, map[string]string{fmt.Sprintf("kubernetes.io/cluster/%s", injection.GetOptions(ctx).ClusterName): "owned"}),
+			},
 		},
 	}
 	if capacityType == v1alpha1.CapacityTypeSpot {
